@@ -1,0 +1,29 @@
+[
+  {
+    "family": "MaterialIcons",
+    "fonts": [
+      {
+        "asset": "https://fonts.gstatic.com/s/materialicons/v42/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2"
+      }
+    ]
+  },
+  {
+    "family": "Poppins",
+    "fonts": [
+      {
+        "asset": "fonts/Poppins-Regular.ttf"
+      },
+      {
+        "asset": "fonts/Poppins-SemiBold.ttf",
+        "style": "semiBold"
+        
+      },{
+        "asset": "fonts/Poppins-Medium.ttf",
+        "style": "medium"
+        
+      }
+    ]
+  }
+
+  
+]
