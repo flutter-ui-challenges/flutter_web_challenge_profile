@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter_web/animation.dart';
 import 'package:flutter_web/material.dart';
 import 'package:flutter_web_challenge_profile/helper/ui_helper.dart';
 import 'package:flutter_web_challenge_profile/view/profile.dart';
@@ -9,7 +12,27 @@ class AboutPage extends StatefulWidget {
   }
 }
 
-class _AboutState extends State<AboutPage> {
+class _AboutState extends State<AboutPage> with TickerProviderStateMixin {
+  AnimationController controller;
+  Animation animation;
+
+  @override
+  void initState() {
+    super.initState();
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    animation = Tween(begin: 0.0, end: 762.0).animate(controller)
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          index = (index + 1) % 2;
+          controller.reverse();
+        }
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
@@ -76,6 +99,30 @@ class _AboutState extends State<AboutPage> {
                           "CONTACT",
                         ),
                       ),
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: realW(115), bottom: realH(34)),
+                        child: Container(
+                          width: realW(2),
+                          height: realH(100),
+                          alignment: Alignment.topCenter,
+                          color: Color(0xFFC8C1C1).withOpacity(0.38),
+                          child: Transform.translate(
+                            offset: Offset(0, realH(index * 50.0)),
+                            child: Container(
+                                width: realW(2),
+                                height: realH(50),
+                                color: Colors.black),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: realW(106), bottom: realH(34)),
+                        child: Text(
+                          "${index + 1}-2",
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -91,14 +138,14 @@ class _AboutState extends State<AboutPage> {
                               top: realH(166), bottom: realH(13)),
                           child: Text(
                             'JAMES CHARLETON',
-                            style: TextStyle( fontSize: realW(15)),
+                            style: TextStyle(fontSize: realW(15)),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(bottom: realH(13)),
                           child: Text(
                             'ABOUT ME',
-                            style: TextStyle( fontSize: realW(50)),
+                            style: TextStyle(fontSize: realW(50)),
                           ),
                         ),
                         Hero(
@@ -147,7 +194,7 @@ latest meme
                             bottom: realH(9),
                           ),
                           child: Text(
-                            '2016 to present Heading inc.',
+                            '2016 to present PayPay inc.',
                             style: TextStyle(
                                 fontFamily: 'Montserrat', fontSize: realW(13)),
                           ),
@@ -157,7 +204,7 @@ latest meme
                             bottom: realH(13),
                           ),
                           child: Text(
-                            'Android/Flutter engineer',
+                            'Sr. User experience designer, Foundations',
                             style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontSize: realW(12),
@@ -188,7 +235,8 @@ rage of product design
                         ),
                         Padding(
                           padding: EdgeInsets.all(0),
-                          child: Image.asset('Unisa.png'),
+                          child: Image.asset(
+                              index % 2 == 0 ? 'Unisa.png' : 'Pinterest.png'),
                         )
                       ],
                     ),
@@ -202,14 +250,34 @@ rage of product design
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Hero(
-                            tag: 'image',
-                            child: Image.asset(
-                              'crystal-shaw-515211-unsplash.png',
+                        Stack(
+                          children: <Widget>[
+                            Hero(
+                                tag: 'image',
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (animation.value == 0) {
+                                      controller.forward();
+                                    }
+                                  },
+                                  child: Image.asset(
+                                    index % 2 == 0
+                                        ? 'crystal-shaw-515211-unsplash.png'
+                                        : 'joshua-rawson-harris-495411-unsplash.png',
+                                    width: realW(533),
+                                    height: realH(762),
+                                    fit: BoxFit.fill,
+                                  ),
+                                )),
+                            Container(
                               width: realW(533),
-                              height: realH(762),
-                              fit: BoxFit.fill,
-                            )),
+                              height: realH(animation.value),
+                              decoration: BoxDecoration(
+                                  color: Colors.black
+                                      .withOpacity(animation.value / 762.0)),
+                            ),
+                          ],
+                        ),
                         Padding(
                           padding: EdgeInsets.only(top: realH(29.0)),
                           child: Hero(

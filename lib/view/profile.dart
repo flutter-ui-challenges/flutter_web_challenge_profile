@@ -107,7 +107,9 @@ class _ProfileState extends State<ProfilePage> {
                             child: Hero(
                                 tag: 'image',
                                 child: Image.asset(
-                                  'crystal-shaw-515211-unsplash.png',
+                                  index % 2 == 0
+                                        ? 'crystal-shaw-515211-unsplash.png'
+                                        : 'joshua-rawson-harris-495411-unsplash.png',
                                   width: realW(232),
                                   height: realH(287),
                                   fit: BoxFit.fill,

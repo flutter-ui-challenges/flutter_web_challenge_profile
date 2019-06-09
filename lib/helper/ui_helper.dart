@@ -3,7 +3,7 @@ import 'dart:core';
 /// ui standard
 final standardWidth = 1400.0;
 final standardHeight = 900.0;
-
+int index = 0;
 /// late init
 double screenWidth;
 double screenHeight;
